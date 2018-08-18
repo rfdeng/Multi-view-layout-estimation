@@ -7,6 +7,8 @@ Room layout estimation is a fundamental task within scene understanding. It aims
 
 By representing the entire room with multi-view images, we can naturally benefit from the mature techniques on perspective images. The estimated room layouts from different views can supplement each other and further improve the prediction accuracy of each perspective. Then we merge the prediction from multiple overlapping images and produce the holistic estimation of layout. The 3D structure of the entire room can be reconstructed from our holistic prediction, as depicted in Fig. \ref{fig:renderingResults}.
 
+(add intro for multi-view layout estimation, there are two related papers using SFM) 
+
 \section{Approach}
 Given multiple images of an indoor scene from different views, our framework produces the corresponding whole-room layout estimation. Fig. \ref{fig:overview} shows the system overview. We first estimate the room layout seperately in multiple perspective images, details can be found in Sec. \ref{sec:layout}. Then the estimated room layouts are integrated into a panorama through image stitching. We average the prediction from different views to improve the overall accuracy, as described in Sec. \ref{sec:merging}. We further align the panorama to be level with the floor and reconstruct 3D structure of the room, as described in Sec. \ref{sec:align}. 
 
@@ -43,11 +45,24 @@ In this section, we combine the predicted layouts from different perspectives an
 \subsection{Alignment and 3D Reconstruction}
 \label{sec:align}
 
-(Optional and undone) In this section, we align the panoramic images to make sure that wall-wall boundaries are vertical to the floor. The aligned panorama can be further rendered into a 3D representation. These two steps are implemented using existing techniques but the rendering part is not yet available.
+(Optional and undone) In this section, we align the panoramic images to make sure that wall-wall boundaries are vertical to the floor. If we use the panorama to generate testing images, this step can be omitted as the reprojected panoramic images naturally met this alignment condition. Then the aligned panorama can be further rendered into a 3D representation. These two steps are implemented using existing techniques but the rendering part is not yet available. 
 
 
 \section{Results}
-Experiments, two parts: one for different FOV, one for comparison with panorama based method.
+Experiments, three parts: one for different field of view (FOV), one for comparison with panorama based method, the last one for qualitative results.
+
+\begin{table}
+	\caption{Results of different FOV.}
+	\label{tab:FOV}
+	\begin{tabular}{cccc}
+		\toprule
+		FOV &3D IoU (\%)&Corner error (\%)&Pixel error (\%)\\
+		\midrule
+		 60 & XX & XX & XX\\
+		90 & XX & XX & XX\\	
+		\bottomrule
+	\end{tabular}
+\end{table}
 
 \begin{table}
 	\caption{Quantitative results on PanoContext dataset.}
@@ -64,7 +79,7 @@ Experiments, two parts: one for different FOV, one for comparison with panorama 
 \end{table}
 
 \section{Conclusions}
-In this paper, we propose ...
+In this paper, we propose a method to estimate the overall room layout based on multiple views. 
 
 
 \begin{acks}
