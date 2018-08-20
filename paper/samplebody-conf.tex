@@ -13,9 +13,9 @@ By representing the entire room with multi-view images, we can naturally benefit
 Given multiple images of an indoor scene from different views, our framework produces the corresponding whole-room layout estimation. Fig. \ref{fig:overview} shows the system overview. We first estimate the room layout seperately in multiple perspective images, details can be found in Sec. \ref{sec:layout}. Then the estimated room layouts are integrated into a panorama through image stitching. We average the prediction from different views to improve the overall accuracy, as described in Sec. \ref{sec:merging}. We further align the panorama to be level with the floor and reconstruct 3D structure of the room, as described in Sec. \ref{sec:align}. 
 
 \begin{figure*}
-	\includegraphics[height=2in, width=6in]{figs/ppline.png}
+	\includegraphics[height=2in, width=7in]{figs/ppline.png}
+	\caption{System overview. (Need to be refined, and the image size will be normalized soon)}
 	\label{fig:overview}
-	\caption{System overview.}
 \end{figure*}
 
 \subsection{Room Layout Estimation}
@@ -24,12 +24,12 @@ In this section, We are going to recover the room layout for perspective images 
  
 %We use an encoder-decoder Network structure proposed in \cite{RoomNet} to estimate room layouts on perspective images. The room layout is represented by a series of keypoints in a particular order. The keypoints are the intersection of different semantic planes on the the perspective images. By learning the location of these keypoints, a room layout can be reconstructed by simply connect these keypoints in a specific order.
 
-\noindent\textbf{Network Architecture.} We adopt the encoder-decoder architecture proposed by \cite{roomnet} with modifications. The encoder part consists of 13 convolutional layers, which are topologically identical to the VGG16 network. It encodes the $320\times320$ input images to $10\times10$ feature maps. Then we modify the decoder part to upsample the feature maps from the bottleneck layer with low resolution to full input resolution. As our simplified representation no longer depends on the topological category of the room, we further remove the classification branch. 
+\noindent\textbf{Network Architecture.} We adopt the encoder-decoder architecture proposed by \cite{roomnet} with modifications. As shown in Fig. \ref{fig:network}, the encoder part consists of 13 convolutional layers, which are topologically identical to the VGG16 network. It encodes the $320\times320$ input images to $10\times10$ feature maps. Then we modify the decoder part to upsample the feature maps from the bottleneck layer with low resolution to full input resolution. As our simplified representation no longer depends on the topological category of the room, we further remove the classification branch. 
 
 \begin{figure}
 	\includegraphics[height=1.5in, width=3in]{figs/network.png}
+	\caption{Network architecture. (Need to be refined, and the image size will be normalized soon)}
 	\label{fig:network}
-	\caption{Network architecture.}
 \end{figure}
 
 \noindent\textbf{Training.} The secondary keypoints can be divided into two categories according to semantics: the intersection of two walls and ceiling or the intersection of two walls and floor. We train the network to regress these two kinds of keypoints seperately in order to eliminate the ambiguity between them. For this reason, the output of our network is a $w \times h \times 2$ probability array $T$, where $w$ and $h$ stand for the width and length of the input image. Each of the 2 slices can be viewed as a probability map for the secondary keypoints in a corresponding category. We adopt the PanoContext dataset \cite{pano} and relabeled Stanford 2D-3D dataset \cite{layoutnet} to train our layout estimation network. To obtain multiple overlapping perspective images, we project the panoramic images into different views using the toolkit provided by \cite{pano}. The ground truth of the secondary keypoints is represented by several 2D Gaussian heatmaps centered at their locations. We adjust the distribution imbalance between foreground and background pixels by degrading the gradient weight of background pixels with a coefficient of 0.2.
@@ -39,7 +39,7 @@ In this section, We are going to recover the room layout for perspective images 
 
 \subsection{Generation of Panorama}
 \label{sec:merging}
-In this section, we combine the predicted layouts from different perspectives and generate a panoramic layout estimation. Fisrt, we stitch the input multi-view images into a panoramic image. Then, we use the same mapping to map the predicted probability array $T$ from different views into a panoramic predictions and averaged across views. To reduce the noise caused by false predictions from specific perspectives, we calculate the LOG response of the panoramic predictions at a certain scale (depending on the radius of the keypoints), $\sigma$ is set to 21 in our case. After that, we sum up the probability maps from two channel to get a holistc probability map. Finally, we follow the post-processing method in \cite{LayoutNet} to obtain the locations of the keypoints in the panorama. In brief, the holistic probability map are summed across rows to find four local maxima for columns, then two largest peaks are found along each of the four columns. In this way, we attain the location of eight keypoints for each panorama. Then the whole room layout can be reconstructed by connecting these eight keypoints.
+In this section, we combine the predicted layouts from different perspectives and generate a panoramic layout estimation. Fisrt, we stitch the input multi-view images into a panoramic image. Then, we use the same mapping to map the predicted probability array $T$ from different views into a panoramic predictions and averaged across views. To reduce the noise caused by false predictions from specific perspectives, we calculate the LOG response of the panoramic predictions at a certain scale (depending on the radius of the keypoints), $\sigma$ is set to 21 in our case. After that, we sum up the probability maps from two channel to get a holistc probability map. Finally, we follow the post-processing method in \cite{LayoutNet} to obtain the locations of the keypoints in the panorama. In brief, the holistic probability map are summed across rows to find four local maxima for columns, then two largest peaks are found along each of the four columns. In this way, we attain the location of eight keypoints for each panorama. Then the whole room layout can be reconstructed by connecting these eight keypoints. 
 
 
 \subsection{Alignment and 3D Reconstruction}
@@ -49,7 +49,13 @@ In this section, we combine the predicted layouts from different perspectives an
 
 
 \section{Results}
-qualitative results and analysis ...
+Our approach performs well on real data even facing occlusions and clutter in the indoor enviroment. A visual sample is shown in Fig. \ref{fig:results1}. The first row are the input multi-view images, the second row are the predicted probability maps from the network. We do the same prediction on the flipped version of the input images and average the corresponding probability maps. Then the predictions from different views are merged to generate the overall probability map on the left of the third row, and the final result is on its right. In this scene, 12 images from different horizontal perspectives are used. Note that several secondary keypoints are occluded by objects, such as the keypoints behind the bed and the TV, but we can still recover the overall layout of the room properly. Our method also show robustness to clutter, such as the many small objects around the TV. (maybe more visual results and analysis)
+
+\begin{figure}
+	\includegraphics[height=1.5in, width=3in]{figs/results1.png}
+	\caption{Our qualitative results on real data. We sum over the third dimension of the probability array $T$ for visulization. In the final result, the ground truth is shown in green and our prediction is shown in red. (Need to be refined, and the image size will be normalized soon)}
+	\label{fig:results1}
+\end{figure}
 
 We also conduct experiments on the PanoContext testset for quantitive comparison with previous panorama based methods. Three standard metrics are adopted for evaluation: 3D Intersection over Union, Corner error and Pixel error. As shown in Tab. \ref{tab:PC}, our approach is nearly on par with the panorama based methods. We believe that the reason for this deficiency is that the FOV of each perspective image is much smaller than that of the panorama. Limited FOV may lead to the wrong focus, as shown in Fig. \ref{wrong}, which then pollutes the overall prediction. To explore the effect of using different size of FOV, we use two different settings during training and testing. For \ang{60}, we project the panorama into 24 perspective images with $FOV=\ang{60}$, while 8 directions around the vertical axis and 3 directions around the horizontal axis. For \ang{90}, we project the panorama into 12 perspective images with $FOV=\ang{90}$, all of them are horizontal and centered around the vertical axis. The quantitative results in Tab. \ref{tab:PC} demonstrate that larger FOV contribute to higher accuracy in overall prediction, which is also consistent with our intuition. In fact, the panorama can be viewed as a special case that the FOV reaches its maximum.
 
