@@ -2,7 +2,10 @@
 
 \usepackage{booktabs} % For formal tables
 \usepackage{siunitx}
+\usepackage{color}
 
+\newcommand{\comments}[1]{}
+\newcommand{\xj}[1]{{\color{red}{xj:#1}}}
 
 % Copyright
 %\setcopyright{none}
@@ -22,31 +25,31 @@
 \acmISBN{123-4567-24-567/08/06}
 
 %Conference
-\acmConference[WOODSTOCK'97]{ACM Woodstock conference}{July 1997}{El
-  Paso, Texas USA}
-\acmYear{1997}
-\copyrightyear{2016}
+%\acmConference[WOODSTOCK'97]{ACM Woodstock conference}{July 1997}{El
+%  Paso, Texas USA}
+%\acmYear{1997}
+%\copyrightyear{2016}
 
 
-\acmArticle{4}
-\acmPrice{15.00}
+%\acmArticle{4}
+%\acmPrice{15.00}
 
 % These commands are optional
 %\acmBooktitle{Transactions of the ACM Woodstock conference}
-\editor{Jennifer B. Sartor}
-\editor{Theo D'Hondt}
-\editor{Wolfgang De Meuter}
+%\editor{Jennifer B. Sartor}
+%\editor{Theo D'Hondt}
+%\editor{Wolfgang De Meuter}
 
 
 \begin{document}
-\title{Multi-view room layout estimation}
-\titlenote{Produces the permission block, and
-  copyright information}
-\subtitle{Extended Abstract}
-\subtitlenote{The full version of the author's guide is available as
-  \texttt{acmart.pdf} document}
+\title{Room Layout Estimation from Multi-View Photos}
+%\titlenote{Produces the permission block, and
+%  copyright information}
+%\subtitle{Extended Abstract}
+%\subtitlenote{The full version of the author's guide is available as
+%  \texttt{acmart.pdf} document}
 
-
+\comments{
 \author{Ruifeng Deng}
 %\authornote{Dr.~Trovato insisted his name be first.}
 \orcid{1234-5678-9012}
@@ -83,12 +86,13 @@
 
 % The default list of authors is too long for headers.
 \renewcommand{\shortauthors}{B. Trovato et al.}
-
+}
 
 \begin{abstract}
 This paper provides a sample of a \LaTeX\ document which conforms,
 somewhat loosely, to the formatting guidelines for
 ACM SIG Proceedings.\footnote{This is an abstract footnote}
+\vspace{4cm}
 \end{abstract}
 
 %
@@ -132,7 +136,10 @@ ACM SIG Proceedings.\footnote{This is an abstract footnote}
 
 \maketitle
 
-\input{samplebody-conf}
+\input{intro}
+\input{approach}
+\input{results}
+%\input{samplebody-conf}
 
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{sample-bibliography}

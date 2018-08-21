@@ -1,0 +1,30 @@
+\section{Introduction}
+
+Indoor scene understanding has attracted wide attention due to its promising applications, including augmented/virtual reality and robotics. Massive researches have been carried out in related fields, such as semantic segmentation, room layout estimation and object detection. 
+Room layout estimation is a fundamental task within scene understanding. It aims to predict the semantic boundaries between walls, the ceiling and the floor in a room. 
+\xj{Provide one or two sentences to address the importance of room layout and its applications.}
+\xj{Traditional methods...}
+With the rapid development of deep neural networks, recent methods built on fully convolutional network (FCN) have achieved remarkable performances in single-view images~\cite{PIO,CFILE,DELAY,ICIP2018}, since these networks could efficiently learn object appearances and distributions from a large database and implicitly encode these priors in the model to efficiently infer the layout of a new image. 
+\xj{limitations of single-view layout estimation techniques?}
+\xj{ambiguity of vertical walls, occluded corners.. multiple topology.}
+
+
+While most of the previous work focused on solving the above problems from one single-view image, we take more views into consideration. 
+%
+The scene information in a single view is quite limited. 
+Large ambiguity usually exists when there are cluttered objects and severe occlusions in the scene and no obvious corner hints.  
+This leads to non-perfect results that are still far from the requirements of practical applications. 
+%
+In contrast, the images taken from multiple views could complement each other. 
+% In this paper, we try to explore a more robust layout estimation algorithm of an indoor scene using multi-view images.
+
+\xj{this paragraph introduces previous methods about multiple views..}
+To make full use of the contextual information for better understanding of an indoor scene, \cite{panocontext} present a whole-room 3D context model which take a \ang{360} panorama as input and then output the detected objects and room layout in 3D. They extends the techniques used in single-view images by projecting the panorama into multiple overlapping perspective images first. In a subsequent technique \cite{LayoutNet}, Zou et al. propose the LayoutNet network which trained directly on the panoramic images to estimate the 3D room layout. They achieve better performance in both accuracy and speed. However, it is not always convenient to obtain high-quality \ang{360} panoramic images that requires no position change between cameras in many applications. 
+For this reason, we propose to explore the whole room structure using multi-view images \xj{that can be taken under different angles and locations} as an alternative scheme.
+
+(add intro for multi-view layout estimation, there are two related papers using SFM) \xj{And compare our method with them.}
+\xj{Emphasize our contribution and novelty here. }
+
+
+By representing the entire room with multi-view images, we can naturally benefit from the mature techniques on perspective images. The estimated room layouts from different views can supplement each other and further improve the prediction accuracy of each perspective. Then we merge the prediction from multiple overlapping images and produce the holistic estimation of layout. The 3D structure of the entire room can be reconstructed from our holistic prediction, as depicted in Fig. \ref{fig:renderingResults}.
+
