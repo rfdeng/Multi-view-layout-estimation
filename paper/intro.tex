@@ -3,7 +3,10 @@
 Indoor scene understanding has attracted wide attention due to its promising applications, including augmented/virtual reality and robotics. Massive researches have been carried out in related fields, such as semantic segmentation, room layout estimation and object detection. 
 Room layout estimation is a fundamental task within scene understanding. It aims to predict the semantic boundaries between walls, the ceiling and the floor in a room. 
 \xj{Provide one or two sentences to address the importance of room layout and its applications.}
+Since man-made indoor environment naturally follows some geometrical rules, for example objects always rest on the floor and many of them tend to be aligned with walls, the estimated room layout can provide various prior knowledge which can be applied in depth estimation \cite{depth}, object dection \cite{bibid}, indoor reconstruction \cite{2017iccvjoint} and so on.
+
 \xj{Traditional methods...}
+Traditional approaches to this task follow a commonly used proposing-ranking scheme. In the proposing stage, numerous layout hypotheses are obtained through vanishing point detection and ray sampling. Then, different hand-crafted features are used to find the best layout. 
 With the rapid development of deep neural networks, recent methods built on fully convolutional network (FCN) have achieved remarkable performances in single-view images~\cite{PIO,CFILE,DELAY,ICIP2018}, since these networks could efficiently learn object appearances and distributions from a large database and implicitly encode these priors in the model to efficiently infer the layout of a new image. 
 \xj{limitations of single-view layout estimation techniques?}
 \xj{ambiguity of vertical walls, occluded corners.. multiple topology.}

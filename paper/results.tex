@@ -3,11 +3,34 @@
 \section{Results}
 Our approach performs well on real data even facing occlusions and clutter in the indoor enviroment. A visual sample is shown in Fig. \ref{fig:results1}. The first row are the input multi-view images, the second row are the predicted probability maps from the network. We do the same prediction on the flipped version of the input images and average the corresponding probability maps. Then the predictions from different views are merged to generate the overall probability map on the left of the third row, and the final result is on its right. In this scene, 12 images from different horizontal perspectives are used. Note that several secondary keypoints are occluded by objects, such as the keypoints behind the bed and the TV, but we can still recover the overall layout of the room properly. Our method also show robustness to clutter, such as the many small objects around the TV. (maybe more visual results and analysis)
 
-\begin{figure}
-	\includegraphics[height=1.5in, width=3in]{figs/results1.png}
-	\caption{Our qualitative results on real data. We sum over the third dimension of the probability array $T$ for visulization. In the final result, the ground truth is shown in green and our prediction is shown in red. (Need to be refined, and the image size will be normalized soon)}
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=\linewidth]{figs/results2.png}
+	\caption{Our qualitative results on real data. We sum over the third dimension of the probability array $T$ for visulization. In the final result, the ground truth is shown in green and our prediction is shown in red. }
 	\label{fig:results1}
 \end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{figs/results3.png}
+	\caption{alternative/more results. }
+	\label{fig:results1}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{figs/partial1.png}
+	\caption{the results of the combined partial views. }
+	\label{fig:results1}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{figs/partial2.png}
+	\caption{alternative/more results of the combined partial views. }
+	\label{fig:results1}
+\end{figure}
+
 
 We also conduct experiments on the PanoContext testset for quantitive comparison with previous panorama based methods. Three standard metrics are adopted for evaluation: 3D Intersection over Union, Corner error and Pixel error. As shown in Tab. \ref{tab:PC}, our approach is nearly on par with the panorama based methods. We believe that the reason for this deficiency is that the FOV of each perspective image is much smaller than that of the panorama. Limited FOV may lead to the wrong focus, as shown in Fig. \ref{wrong}, which then pollutes the overall prediction. To explore the effect of using different size of FOV, we use two different settings during training and testing. For \ang{60}, we project the panorama into 24 perspective images with $FOV=\ang{60}$, while 8 directions around the vertical axis and 3 directions around the horizontal axis. For \ang{90}, we project the panorama into 12 perspective images with $FOV=\ang{90}$, all of them are horizontal and centered around the vertical axis. The quantitative results in Tab. \ref{tab:PC} demonstrate that larger FOV contribute to higher accuracy in overall prediction, which is also consistent with our intuition. In fact, the panorama can be viewed as a special case that the FOV reaches its maximum.
 
@@ -34,7 +57,7 @@ We also conduct experiments on the PanoContext testset for quantitive comparison
 	\label{tab:PC}
 	\begin{tabular}{cccc}
 		\toprule
-		Method&3D IoU (\%)&Corner error (\%)&Pixel error (\%)\\
+		Method&3D IoU (\%)& $\epsilon_{corner}$ (\%) & $\epsilon_{pixel}$ (\%)\\
 		\midrule
 		PanoContext & 67.23 & 1.60 & 4.55\\
 		LayoutNet & 74.48 & 1.06 & 3.34\\
