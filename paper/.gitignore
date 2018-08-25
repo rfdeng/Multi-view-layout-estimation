@@ -27,3 +27,4 @@ sample-*.pdf
 *~
 *.bcf
 *.run.xml
+*.gz
