@@ -12,7 +12,7 @@ We further align the panorama to be level with \xj{(what do you mean by be level
 \begin{figure*}[ht]
 	\centering
 	\includegraphics[width=\linewidth]{figs/ppline.png}
-	\caption{System overview. }
+	\caption{Our pipeline consists of two main steps. Firstly, the SVNet is applied to estimate the probability map for each image seperately. Secondly, the multi-view images are aligned into a combined image using view transformation $f$. Then we use the same transformation $f$ to generate a combined probability map. The final result is obtained by a simple post-processing. }
 	\label{fig:overview}
 \end{figure*}
 
@@ -65,7 +65,7 @@ Second, we remove the classification branch of the original RoomNet because our 
 \begin{figure}
 	\centering
 	\includegraphics[width=\linewidth]{figs/network.png}
-	\caption{Network architecture. }
+	\caption{Network architecture. The encoder part is topologically identical to the VGG16 network. It encodes the $320 \times 320$ input images to $10 \times 10$ feature maps. Then the decoder part upsample the feature maps from the bottleneck layer to full input resolution. }
 	\label{fig:network}
 \end{figure}
 
