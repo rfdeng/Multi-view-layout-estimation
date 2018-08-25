@@ -6,7 +6,7 @@
 
 \newcommand{\comments}[1]{}
 \newcommand{\xj}[1]{{\color{red}{xj:#1}}}
-
+\newcommand{\drf}[1]{\textcolor[rgb]{0.00,0.50,1.00}{(drf: #1)}}
 % Copyright
 %\setcopyright{none}
 %\setcopyright{acmcopyright}
@@ -91,10 +91,10 @@
 Room layout estimation is a widely explored problem in indoor scene understanding. %While most previous work focus on estimating the room layout in a single-view image, we try to extend the task using multi-view images. 
 While room layout estimation in a single-view image has been extensively studied, we take multiple photos as input to better estimate a more complete room layout. 
 % 
-In this paper, we propose a \xj{more concise} representation of room layout using corners only for convenient integration of multiple views. 
+In this paper, we propose a more concise representation of room layout using corners only for convenient integration of multiple views. 
 % 
-A single-view network (SVNet) is designed to based on the new corner-based representation. 
-\xj{The estimated partial layouts for each single view are then stitched together in a simple average manner.}
+A single-view network (SVNet) is designed based on the new corner-based representation. 
+The estimated partial layouts for each single view are then stitched together \xj{in a simple average manner.} \drf{not sure, a weighted average, linear blending}
 Our system estimates a more complete room layout with a large field of view, and can be extended to \ang{360}-panoramas. 
 The results on a wide range of indoor scenes show the robustness of our method. 
 %The results on real data look reasonable and impressive. 

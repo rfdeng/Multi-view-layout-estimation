@@ -7,11 +7,12 @@ Since man-made indoor environments naturally follow some geometrical rules, for 
 %\xj{Traditional methods...}
 Traditional approaches to this task follow a commonly used proposing-ranking scheme \cite{hedau2009recovering,wang2013discriminative,gupta2010estimating,hedau2010thinking}. In the proposing stage, numerous layout hypotheses are obtained through vanishing point detection and ray sampling. Then, different hand-crafted features are used to find the best layout. 
 \xj{However, these techniques usually suffer from tedious and fragile post-processing tricks.}
-With the rapid development of deep neural networks, recent methods built on fully convolutional network (FCN) have achieved remarkable performances in single-view images~\cite{mallya2015learning,dasgupta2016delay,ren2016coarse,zhao2017physics,LeeRoomNet17,ICIP2018}, since these networks could efficiently learn object appearances and spatial distributions from a large database, and they implicitly encode these priors in the learned models to efficiently infer the layout of a new image. 
+\drf{It's the characteristic of DNN based method excluding \cite{zhao2017physics}}
+With the rapid development of deep neural networks, recent methods built on fully convolutional network (FCN) have achieved remarkable performances in single-view images~\cite{mallya2015learning,dasgupta2016delay,ren2016coarse,zhao2017physics,LeeRoomNet17}, since these networks could efficiently learn object appearances and spatial distributions from a large database, and they implicitly encode these priors in the learned models to efficiently infer the layout of a new image. 
 %\xj{limitations of single-view layout estimation techniques?}
 %\xj{ambiguity of vertical walls, occluded corners.. multiple topology.}
 %
-However, single-view layout estimation has several inherent limitations, such as the ambiguity among walls claimed by \cite{dasgupta2016delay}, and the occlusion of critical semantic corners in a specific view. These limitations lead to non-perfect results that are still far from the requirements of practical applications.
+However, \drf{these techniques usually suffer from tedious and fragile post-processing tricks. At the same time, }single-view layout estimation has several inherent limitations, such as the ambiguity among walls claimed by \cite{dasgupta2016delay}, and the occlusion of critical semantic corners in a specific view. These limitations lead to non-perfect results that are still far from the requirements of practical applications.
 
 %
 While most of the previous work focused on estimating the room layout from one single-view image, we take more views into consideration. Unlike the single-view based methods, the images taken from multiple views complement each other, which can ease the ambiguity caused by cluttered objects and severe occlusions of the room corners. At the same time, the combined room layout integrated from different views naturally possess larger field of view (FOV) than that of the single-view layout. 
@@ -22,7 +23,7 @@ While most of the previous work focused on estimating the room layout from one s
 %In contrast, the images taken from multiple views could complement each other. 
 % In this paper, we try to explore a more robust layout estimation algorithm of an indoor scene using multi-view images.
 %\xj{this paragraph introduces previous methods about multiple views..} (few, so merged with the front part) 
-Few research has been carried out on multi-view-based layout estimation. \cite{wangmulti} follow the traditional proposing-ranking scheme in single-view layout estimation and merge the information from different views by integrating the structure from motion (SFM) into the framework. Their ranking part is implemented with complex hand-crafted features. 
+Few research has been carried out on multi-view-based layout estimation. \cite{bao2014understanding} follow the traditional proposing-ranking scheme in single-view layout estimation and merge the information from different views by integrating the structure from motion (SFM) into the framework. Their ranking part is implemented with complex hand-crafted features. 
 %
 In contrast, we propose a highly concise representation and an efficient algorithm to estimate the combined room layout from multi-view images.
 
@@ -31,16 +32,16 @@ Our work is similar in a sense to panorama-based room layout estimation \cite{zh
 %
 \cite{zhang2014panocontext} presents a whole-room 3D context model which take a \ang{360} panorama as input and then outputs the detected objects and room layout in 3D. 
 They extends the techniques used in single-view images by projecting the panorama into multiple overlapping perspective images first. 
-In a subsequent technique \cite{zou2018layoutnet}, Zou et al. propose the LayoutNet network which trained directly on the panoramic images to estimate the 3D room layout. They achieve better performance \xj{compared with single-view-based methods?} in both accuracy and speed.
+In a subsequent technique \cite{zou2018layoutnet}, Zou et al. propose the LayoutNet network which trained directly on the panoramic images to estimate the 3D room layout. They achieve better performance than \cite{zhang2014panocontext} in both accuracy and speed.
 %
-Inspired from these panorama-based methods, we design a new representation for room layout. Given multiple perspective images that are taken from \xj{different angles but the same position}, we obtain a combined room layout at any FOV including the panoramic layout. Our approach also allows to revisit the same area several times because of the overlaps among multi-view images, which can enhance the prediction of interested space.
+Inspired from these panorama-based methods, we design a new representation for room layout. Given multiple perspective images that are taken from different angles but the same position, we obtain a combined room layout at any FOV including the panoramic layout. Our approach also allows to revisit the same area several times because of the overlaps among multi-view images, which can enhance the prediction of interested space.
 
 %
 In order to reduce the ambiguities of different types of room layout, we propose a concise corner-based representation of room layouts in single-view image and design a single-view network (SVNet) to estimate these new corner-based layouts. 
 The new representations are easy to integrate.
-We combine the estimated room layouts from different perspectives and generate a combined room layout \xj{using what technique?}. 
+We combine the estimated room layouts from different perspectives and generate a combined room layout \xj{using what technique?} using weighted average in the overlapping area. 
 The final results look reasonable and impressive. 
-We also evaluate our approach quantitatively on a panorama dataset and achieve comparable performance on a whole-room layout with full \ang{360}-panorama-based methods without losing the flexibility.   
+We also evaluate our approach quantitatively on a panorama dataset and achieve comparable performance on whole-room layout with full \ang{360}-panorama-based methods without losing the flexibility.   
 
 \comments{
 To make full use of the contextual information for better understanding of an indoor scene, \cite{panocontext} present a whole-room 3D context model which take a \ang{360} panorama as input and then output the detected objects and room layout in 3D. They extends the techniques used in single-view images by projecting the panorama into multiple overlapping perspective images first. In a subsequent technique \cite{LayoutNet}, Zou et al. propose the LayoutNet network which trained directly on the panoramic images to estimate the 3D room layout. They achieve better performance in both accuracy and speed. However, it is not always convenient to obtain high-quality \ang{360} panoramic images that requires no position change between cameras in many applications. 
