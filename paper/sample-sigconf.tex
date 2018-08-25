@@ -25,9 +25,8 @@
 \acmISBN{123-4567-24-567/08/06}
 
 %Conference
-%\acmConference[WOODSTOCK'97]{ACM Woodstock conference}{July 1997}{El
-%  Paso, Texas USA}
-%\acmYear{1997}
+\acmConference[Siggraph Asia'2018]{ACM SigGraph Asia}{Dec 2018}{Tokyo, Japan}
+\acmYear{2018}
 %\copyrightyear{2016}
 
 
@@ -89,7 +88,17 @@
 }
 
 \begin{abstract}
-Room layout estimation is a widely explored problem in indoor scene understanding. While most previous work focus on estimating the room layout in a single-view image, we try to extend the task using multi-view images. In this paper, we propose a simplified representation for room layout which is very easy to incorporate across views. A single-vew network (SVNet) is designed to learn the new representation. Given multi-view images, our system can estimate the combined room layout with large field of view which can even extend to the panorama. The results on real data look reasonable and impressive. We also achieve performance close to panorama based method on a panorama dataset.\footnote{This is an abstract footnote}
+Room layout estimation is a widely explored problem in indoor scene understanding. %While most previous work focus on estimating the room layout in a single-view image, we try to extend the task using multi-view images. 
+While room layout estimation in a single-view image has been extensively studied, we take multiple photos as input to better estimate a more complete room layout. 
+% 
+In this paper, we propose a \xj{more concise} representation of room layout using corners only for convenient integration of multiple views. 
+% 
+A single-view network (SVNet) is designed to based on the new corner-based representation. 
+\xj{The estimated partial layouts for each single view are then stitched together in a simple average manner.}
+Our system estimates a more complete room layout with a large field of view, and can be extended to \ang{360}-panoramas. 
+The results on a wide range of indoor scenes show the robustness of our method. 
+%The results on real data look reasonable and impressive. 
+%We also achieve performance close to \ang{360}-panorama-based techniques on a panorama dataset. 
 \end{abstract}
 
 %
@@ -110,7 +119,7 @@ Room layout estimation is a widely explored problem in indoor scene understandin
 \ccsdesc[300]{Computing methodologies~Scene understanding}
 
 
-\keywords{Scene understanding, Layout estimation, Object detection, Image stitching}
+\keywords{Scene understanding, Layout estimation, Image stitching}
 
 
 \maketitle
