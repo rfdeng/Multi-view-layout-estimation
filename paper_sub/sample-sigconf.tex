@@ -89,13 +89,13 @@
 
 \begin{abstract}
 Room layout estimation is a widely explored problem in indoor scene understanding. %While most previous work focus on estimating the room layout in a single-view image, we try to extend the task using multi-view images. 
-While room layout estimation in a single-view image has been extensively studied, we take multiple photos as input to better estimate a more complete room layout. 
+While estimating room layout in a single-view image has been extensively studied, we take multiple photos as input to robustly estimate a more complete room layout. 
 % 
-In this paper, we propose a more concise representation of room layout using corners only for convenient integration of multiple views. 
+In this paper, we propose a concise representation of room layout using corners only for convenient integration of multiple views. 
 % 
-A single-view network (SVNet) is designed based on the new corner-based representation. 
-The estimated partial layouts for each single view are then stitched together in a simple average manner.
-Our system estimates a more complete room layout with a large field of view, and can be extended to \ang{360}-panoramas. 
+A single-view network is designed based on our corner-based representation. 
+The estimated partial layouts for each single view are then stitched together in a linear blending manner.
+Our system estimates a more complete room layout with a larger field of view, and can be extended to \ang{360}-panoramas. 
 The results on a wide range of indoor scenes show the robustness of our method. 
 %The results on real data look reasonable and impressive. 
 %We also achieve performance close to \ang{360}-panorama-based techniques on a panorama dataset. 
