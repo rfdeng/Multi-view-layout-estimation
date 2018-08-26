@@ -3,7 +3,7 @@
 \begin{figure*}
 	\centering
 	\includegraphics[width=\linewidth]{figs/ppline.png}
-	\caption{Our pipeline consists of two main steps. First, a single-view network is employed to estimate the probability map of room corners for each image separately. Secondly, the probability maps of the input multi-view images are composed together to generate a combined probability map of the room corners according to the image transformations. The final result is obtained by selecting the corners of local maximum.
+	\caption{Our pipeline consists of two main steps. First, a single-view network is employed to estimate the heatmap of room corners for each image separately. Secondly, the heatmaps of the input multi-view images are composed together to generate a combined heatmap of the room corners according to the image transformations. The final result is obtained by selecting the corners of local maximum.
 		 }
 	\label{fig:overview}
 \end{figure*}
@@ -13,19 +13,19 @@ Room layout estimation is a fundamental task within scene understanding. It aims
 Since man-made indoor environments naturally follow some geometrical rules, for example objects always rest on the floor and many of them tend to be aligned with walls, the estimated room layout can provide valuable geometric priors, which can be applied in depth estimation, object detection~\cite{hedau2010thinking}, scene reconstruction \cite{lee2017joint} and so on.
 
 %\xj{Traditional methods...}
-Traditional approaches to this task follow a common proposing-ranking scheme \cite{hedau2009recovering,wang2013discriminative,gupta2010estimating,hedau2010thinking}. In the proposing stage, numerous layout hypotheses are obtained through vanishing point detection and ray sampling. Then, different hand-crafted features are used to find the best layout. 
+Traditional approaches to this task usually follow a common proposing-ranking scheme \cite{hedau2009recovering,wang2013discriminative,gupta2010estimating,hedau2010thinking}. In the proposing stage, numerous layout hypotheses are obtained through vanishing point detection and ray sampling. Then, different hand-crafted features are used to find the best layout. 
 \comments{
 \xj{However, these techniques usually suffer from tedious and fragile post-processing tricks.}
 \drf{It's the characteristic of DNN based method excluding \cite{zhao2017physics}}
 }
-With the rapid development of deep neural networks, recent methods built on fully convolutional network (FCN) have achieved remarkable performances in single-view images~\cite{mallya2015learning,dasgupta2016delay,ren2016coarse,zhao2017physics,LeeRoomNet17}. These networks efficiently learn object appearances and spatial distributions from a large database, and they implicitly encode these priors in the learned models to efficiently infer the layout of a new image. 
+With the rapid development of deep neural networks, recent methods built on fully convolutional network (FCN) have achieved remarkable performances in single-view images~\cite{mallya2015learning,dasgupta2016delay,ren2016coarse,zhao2017physics,LeeRoomNet17}. These networks efficiently learn object appearances and spatial distributions from a large database, and they implicitly encode these priors in the trained models to efficiently infer the layout of a new image. 
 %\xj{limitations of single-view layout estimation techniques?}
 %\xj{ambiguity of vertical walls, occluded corners.. multiple topology.}
 %
 However, these techniques usually suffer from tedious and fragile post-processing tricks. At the same time, single-view layout estimation has several inherent limitations, such as the ambiguity among walls claimed by \cite{dasgupta2016delay}, and the occlusion of critical semantic corners in a specific view. These limitations lead to non-perfect results that are still far from the requirements of practical applications.
 
 %
-While most of the previous work focused on estimating the room layout from one single-view image, we take more views into consideration. Unlike the single-view-based methods, the images taken from multi-views complement each other, which can ease the ambiguity caused by cluttered objects and occlusions of the room corners. At the same time, the combined room layout integrated from different views naturally possess larger field of view (FOV) than that of the single-view layout. 
+While most of the previous work focused on estimating the room layout from one single-view image, we take more views into consideration. Unlike the single-view-based methods, the images taken from multi-views complement each other, which can ease the ambiguity caused by cluttered objects and occlusions of the room corners. At the same time, the combined room layout integrated from different views possess larger field of view (FOV) than that of the single-view layout. 
 %
 Few research has been carried out on multi-view-based layout estimation. \cite{bao2014understanding} follows the traditional proposing-ranking scheme in single-view layout estimation and merge the information from different views by integrating the structure from motion (SFM) into the framework. Their ranking part is implemented with complex hand-crafted features. 
 %
